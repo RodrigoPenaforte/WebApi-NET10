@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi_NET10.Data;
 using WebApi_NET10.Repository;
+using WebApi_NET10.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<IPedidoRepository, PedidoRepository>();
+
+builder.Services.AddScoped<IClienteService, ClienteService>();
 
 var app = builder.Build();
 
