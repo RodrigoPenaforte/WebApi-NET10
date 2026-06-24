@@ -24,9 +24,14 @@ namespace WebApi_NET10.Service
 
         }
 
-        public Task CriarCliente(Cliente cliente)
+        public async Task<Cliente?> CriarCliente(Cliente cliente)
         {
-            return _clienteRepository.CriarCliente(cliente) ?? throw new BadHttpRequestException("Não foi possível criar o cliente.");
+            var criado = await _clienteRepository.CriarCliente(cliente);
+
+            if (criado is null)
+                return null;
+
+            return criado;
         }
         public async Task<bool> AtualizarCliente(Cliente cliente)
         {

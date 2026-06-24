@@ -6,9 +6,9 @@ namespace WebApi_NET10.Repository
     {
         public Task<IEnumerable<Cliente>> BuscarTodosAsync();
         public Task<Cliente?> BuscarPorIdAsync(long id);
-        public Task CriarCliente(Cliente cliente);
+        Task<Cliente> CriarCliente(Cliente cliente);
         public Task AtualizarCliente(Cliente cliente);
-        public Task DeletarCliente(Cliente cliente );
+        public Task DeletarCliente(Cliente cliente);
         public Task<bool> SalvarAsync();
     }
 }

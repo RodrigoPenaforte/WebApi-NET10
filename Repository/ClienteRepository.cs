@@ -24,11 +24,12 @@ namespace WebApi_NET10.Repository
                     .Include(p => p.Pedidos)
                     .FirstOrDefaultAsync(x => x.Id == id);
 
-        public async Task CriarCliente(Cliente cliente)
+        public async Task<Cliente> CriarCliente(Cliente cliente)
         {
             await _context.Clientes.AddAsync(cliente);
-            await SalvarAsync();
+            await _context.SaveChangesAsync();
 
+            return cliente;
         }
         public async Task AtualizarCliente(Cliente cliente)
         {

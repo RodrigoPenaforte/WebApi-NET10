@@ -25,6 +25,7 @@ namespace WebApi_NET10.Service
 
         public async Task CriarPedido(Pedido pedido)
         {
+            pedido.Data = DateTime.UtcNow;
             await _pedidoRepository.CriarPedido(pedido);
         }
         public async Task<bool> AtualizarPedido(Pedido pedido)
