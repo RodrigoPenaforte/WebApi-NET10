@@ -23,10 +23,16 @@ namespace WebApi_NET10.Service
             return await _pedidoRepository.BuscarPorIdAsync(id) ?? throw new BadHttpRequestException("Não foi encontrado o pedido...");
         }
 
-        public async Task CriarPedido(Pedido pedido)
+        public async Task<Pedido> CriarPedido(Pedido pedido)
         {
             pedido.Data = DateTime.UtcNow;
-            await _pedidoRepository.CriarPedido(pedido);
+            var criado = await _pedidoRepository.CriarPedido(pedido);
+
+            if (criado is null)
+                return null;
+
+            return criado;
+
         }
         public async Task<bool> AtualizarPedido(Pedido pedido)
         {

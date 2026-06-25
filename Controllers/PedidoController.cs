@@ -15,11 +15,11 @@ namespace WebApi_NET10.Controllers
     public class PedidoController : ControllerBase
     {
         private readonly IPedidoService _pedidoService;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
         private readonly IClienteService _clienteService;
 
-        public PedidoController(IPedidoService pedidoService, Mapper mapper, IClienteService clienteService)
+        public PedidoController(IPedidoService pedidoService, IMapper mapper, IClienteService clienteService)
         {
             _pedidoService = pedidoService;
             _mapper = mapper;
@@ -47,10 +47,11 @@ namespace WebApi_NET10.Controllers
         public async Task<ActionResult<PedidoOutputDto>> CriarPedido(PedidoInputDto pedidoInputDto)
         {
             var clienteExiste = await _clienteService.BuscarPorIdAsync(pedidoInputDto.ClienteId);
-            if (clienteExiste is null) return NotFound("Çliente não encontrado...");
+            if (clienteExiste is null) return NotFound("Cliente não encontrado...");
 
             var pedidoMapeado = _mapper.Map<Pedido>(pedidoInputDto);
-            var pedido = _pedidoService.CriarPedido(pedidoMapeado);
+
+            var pedido = await _pedidoService.CriarPedido(pedidoMapeado);
             var pedidoOutPut = _mapper.Map<PedidoOutputDto>(pedido);
 
             return CreatedAtAction(nameof(BuscarPedidosPorId), new { id = pedidoOutPut.Id }, pedidoOutPut);
@@ -73,12 +74,12 @@ namespace WebApi_NET10.Controllers
             return Ok(pedidoMapeadoParaUsuario);
         }
 
-          [HttpDelete("{id}")]
-        public async Task <ActionResult<PedidoOutputDto>> Deletar(long id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<PedidoOutputDto>> Deletar(long id)
         {
             var pedidoDeltado = await _pedidoService.DeletarPedido(id);
-            
-            if(!pedidoDeltado)
+
+            if (!pedidoDeltado)
                 return NotFound();
 
             return NoContent();

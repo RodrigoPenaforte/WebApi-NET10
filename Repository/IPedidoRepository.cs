@@ -10,7 +10,7 @@ namespace WebApi_NET10.Repository
     {
         public Task<IEnumerable<Pedido>> BuscarTodosAsync();
         public Task<Pedido?> BuscarPorIdAsync(long id);
-        public Task CriarPedido(Pedido pedido);
+        public Task<Pedido> CriarPedido(Pedido pedido);
         public Task AtualizarPedido(Pedido pedido);
         public Task DeletarPedido(Pedido pedido);
         public Task<bool> SalvarAsync();

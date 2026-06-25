@@ -24,10 +24,12 @@ namespace WebApi_NET10.Repository
         public async Task<Pedido?> BuscarPorIdAsync(long id)
          => await _context.Pedidos.Include(c => c.Cliente).FirstOrDefaultAsync(i => i.Id == id);
 
-        public async Task CriarPedido(Pedido pedido)
+        public async Task<Pedido> CriarPedido(Pedido pedido)
         {
             await _context.AddAsync(pedido);
             await SalvarAsync();
+            
+            return pedido;
         }
         public async Task AtualizarPedido(Pedido pedido)
         {
